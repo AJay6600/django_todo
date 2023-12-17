@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'todo/style.css' %}">
+    <title>ToDO</title>
+</head>
+<body>
+   <div class="container">
+    <div class="box">
+        <div class="row1">
+            <h2> WHAT DO YOU WANT TO DO DAY</h2>
+            <form action="add/" method="POST" role="form">
+                {% csrf_token %}
+                <div class="form-field">
+                    <input type="text" name="text" placeholder="Enter Your ToDo">
+                </div>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+        <div class="row2">
+            <button > <a href="delete/completed/">Delete Completed</a></button>
+            <button ><a href="delete/all/">Delete ALL</a></button>
+        </div>
+
+        <div class="row3">
+            {% for todo in todolist %}
+            {% if todo.complete %}
+            <div class="todo-incomplete">
+                <p>{{ todo.text }}</p>
+            </div>             
+            {% else %}
+            <div class="todo-complete">
+                <p><a href="remove/{{todo.id}}"> {{ todo.text }}</a></p>
+            </div> 
+           
+            {% endif %}   
+           
+            {% endfor %}
+            
+                
+        </div>
+    </div>
+ 
+   </div>
+</body>
+</html>
